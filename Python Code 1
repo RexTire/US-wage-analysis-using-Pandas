@@ -1,0 +1,30 @@
+import pandas as pd
+
+df = pd.read_csv("Pandas\min_wage\Minimum Wage Data.csv")
+df.sort_values(by="State", inplace=True)
+
+state_list = df["State"].unique()
+#  Department.Of.Labor.Cleaned.Low.Value.2020.Dollars 
+
+graph_df = pd.DataFrame
+
+for state in state_list:
+    state_df = df.copy()[df["State"] == state]
+    state_df.set_index("Year", inplace = True)
+    state_df.sort_index(inplace = True)
+    state_df[f'{state}'] =state_df["Department.Of.Labor.Cleaned.Low.Value.2020.Dollars"]
+    if graph_df.empty:
+        graph_df = state_df[[f'{state}']]
+    else:
+        graph_df = graph_df.join(state_df[[f'{state}']])
+
+issue_df = df[df["Department.Of.Labor.Cleaned.Low.Value.2020.Dollars"]==0]
+
+import numpy as np
+
+min_wage_corr = graph_df.replace(0, np.NaN).dropna(axis=1).corr() #remove issue_df
+
+import matplotlib.pyplot as plt
+
+plt.matshow(min_wage_corr)
+plt.show()
