@@ -1,10 +1,10 @@
-import pandas as pd
+import pandas as pd  #import pandas module
 
-df = pd.read_csv("Pandas\min_wage\Minimum Wage Data.csv")
-gb = df.groupby("State")
+df = pd.read_csv("Pandas\min_wage\Minimum Wage Data.csv")  #read file
+gb = df.groupby("State")  #group the data by state and assigned to gb
 #print(gb.get_group("Alabama").set_index("Year").tail())
 
-min_wage_df = pd.DataFrame()
+min_wage_df = pd.DataFrame() #create a new data frame
 
 for name,group in gb:
     if min_wage_df.empty:
